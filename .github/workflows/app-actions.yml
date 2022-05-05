@@ -1,0 +1,45 @@
+name: Servian App Build
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  REPONAME: ${{ github.event.repository.name }}
+  WORKSPACE: ${{ github.workspace }}
+  Administrator_login: ${{ secrets.ADMINISTRATOR_LOGIN}}
+  Administrator_login_password: ${{secrets.ADMINISTRATOR_LOGIN_PASSWORD}}
+  ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
+  ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
+  ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+      - name: Set env variables
+        run: |
+        export ARM_USE_MSI=true
+        export ARM_SUBSCRIPTION_ID =${{secrets.ARM_SUBSCRIPTION_ID}}
+        export ARM_TENANT_ID =${{secrets.ARM_TENANT_ID}}
+        export ARM_CLIENT_ID =${{secrets.ARM_CLIENT_ID}}
+
+      - name: Print terraform version
+        run: terraform version
+
+      - name: Initalize Terraform
+        run: terraform init
+
+      - name: terraform plan
+        run: terraform plan -var="administratorlogin=${{secrets.Administrator_login}}" -var="administratorloginpassword=${{secrets.Administrator_login_ password}}" -out=tfplan
+
+      - name: terraform apply
+        run: terraform apply -auto-approve "tfplan"
