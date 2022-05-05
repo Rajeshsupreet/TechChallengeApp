@@ -61,3 +61,23 @@ variable "docker_image_tag" {
   description = "The listenhost of the app"
   default     = "latest"
 }
+
+variable "client_id" {
+  type = string
+  description = "Azure Client id"
+}
+
+variable "client_secret" {
+  type = string
+  description = "Azure client Secret "
+}
+
+variable "tenant_id" {
+  type = string
+  description = " Azure tenant_id"
+}
+
+variable "subscription_id" {
+  type = string
+  description = "Azure subscription id"
+}

@@ -9,10 +9,10 @@ env:
   REPONAME: ${{ github.event.repository.name }}
   WORKSPACE: ${{ github.workspace }}
   Administrator_login: ${{ secrets.ADMINISTRATOR_LOGIN}}
-  Administrator_login_password: ${{secrets.ADMINISTRATOR_LOGIN_PASSWORD}}
-  ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
-  ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
-  ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
+  client_id: ${{secrets.CLIENT_ID}}
+  client_secret: ${{secrets.CLIENT_SECRET}}
+  tenant_id: ${{secrets.SUBSCRIPTION_ID}}
+  subscription_id: ${{secrets.TENANT_ID}}
 
 jobs:
   Build:
@@ -32,7 +32,7 @@ jobs:
         run: terraform init
 
       - name: terraform plan
-        run: terraform plan -var="administratorlogin=${{secrets.Administrator_login}}" -var="administratorloginpassword=${{secrets.Administrator_login_password}}" -out=tfplan
+        run: terraform plan -var="administratorlogin=${{secrets.Administrator_login}}" -var="administratorloginpassword=${{secrets.Administrator_login_password}}" -var="client_id=${{secrets.client_id}}" -var="client_secret=${{secrets.client_secret}}" -var="tenant_id=${{secrets.tenant_id}}" -var="subscription_id=${{secrets.subscription_id}}" -out=tfplan
 
       - name: terraform apply
         run: terraform apply -auto-approve "tfplan"
