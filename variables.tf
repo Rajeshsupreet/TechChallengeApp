@@ -1,7 +1,7 @@
 variable "rg-name" {
   type        = string
   description = "The Resource Group name"
-  default     = "rg-tech-app"
+  default     = "tech-app-rg"
 }
 
 variable "location" {
@@ -31,12 +31,13 @@ variable "service-plan-name" {
 variable "appname" {
   type        = string
   description = "app name"
-  default     = "technicalapp1353"
+  default     = "serviantechapp"
 }
 
 variable "administratorlogin" {
   type        = string
   description = "app name"
+  default     = "psuser"
 }
 
 variable "administratorloginpassword" {
@@ -63,21 +64,21 @@ variable "docker_image_tag" {
 }
 
 variable "client_id" {
-  type = string
+  type        = string
   description = "Azure Client id"
 }
 
 variable "client_secret" {
-  type = string
+  type        = string
   description = "Azure client Secret "
 }
 
 variable "tenant_id" {
-  type = string
+  type        = string
   description = " Azure tenant_id"
 }
 
 variable "subscription_id" {
-  type = string
+  type        = string
   description = "Azure subscription id"
 }

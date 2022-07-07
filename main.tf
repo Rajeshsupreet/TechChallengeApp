@@ -18,8 +18,8 @@ resource "azurerm_postgresql_server" "DatabaseServer" {
   geo_redundant_backup_enabled = true
   auto_grow_enabled            = true
 
-  public_network_access_enabled = true
-  ssl_enforcement_enabled       = "false"
+  public_network_access_enabled    = true
+  ssl_enforcement_enabled          = "false"
   ssl_minimal_tls_version_enforced = "TLSEnforcementDisabled"
 
   administrator_login          = var.administratorlogin
@@ -39,7 +39,7 @@ resource "azurerm_postgresql_firewall_rule" "rule" {
   resource_group_name = azurerm_resource_group.rg.name
   server_name         = azurerm_postgresql_server.DatabaseServer.name
   start_ip_address    = "0.0.0.0"
-  end_ip_address      = "255.255.255.255"
+  end_ip_address      = "0.0.0.0"
 }
 
 resource "azurerm_app_service_plan" "service-plan" {
@@ -85,7 +85,7 @@ resource "azurerm_app_service" "app" {
     VTT_LISTENHOST             = var.listenhost
     VTT_DBPORT                 = "5432"
     WEBSITES_PORT              = "80"
-    DOCKER_REGISTRY_SERVER_URL = "https://index.docker.io"
+    DOCKER_REGISTRY_SERVER_URL = "https://index.docker.io/v1"
     PGSSLMODE                  = "require"
   }
 
