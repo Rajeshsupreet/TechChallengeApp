@@ -8,11 +8,13 @@ on:
 env:
   REPONAME: ${{ github.event.repository.name }}
   WORKSPACE: ${{ github.workspace }}
-  Administrator_login: ${{ secrets.ADMINISTRATOR_LOGIN}}
   client_id: ${{secrets.CLIENT_ID}}
   client_secret: ${{secrets.CLIENT_SECRET}}
-  tenant_id: ${{secrets.SUBSCRIPTION_ID}}
-  subscription_id: ${{secrets.TENANT_ID}}
+  tenant_id: ${{secrets.TENANT_ID}}
+  subscription_id: ${{secrets.SUBSCRIPTION_ID}}
+  sas_token: ${{secrets.SAS_TOKEN}}
+  administratorloginpassword: ${{secrets.ADMINISTRATORLOGINPASSWORD}}
+
 
 jobs:
   Build:
@@ -25,14 +27,22 @@ jobs:
         uses: actions/checkout@v2.3.4
         with:
           fetch-depth: 0
-      - name: Print terraform version
+       - name: Print terraform version
         run: terraform version
-
+      
+      - name: Export Azure Login Credentials
+        run: |
+          echo "ARM_CLIENT_ID=${{ secrets.CLIENT_ID }}" >> $GITHUB_ENV
+          echo "ARM_CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "ARM_SUBSCRIPTION_ID=${{ secrets.SUBSCRIPTION_ID }}" >> $GITHUB_ENV
+          echo "ARM_TENANT_ID=${{ secrets.TENANT_ID }}" >> $GITHUB_ENV
+          echo "ARM_SAS_TOKEN=${{ secrets.SAS_TOKEN }}" >> $GITHUB_ENV
+          
       - name: Initalize Terraform
         run: terraform init
 
       - name: terraform plan
-        run: terraform plan -var="administratorlogin=${{secrets.Administrator_login}}" -var="administratorloginpassword=${{secrets.Administrator_login_password}}" -var="client_id=${{secrets.client_id}}" -var="client_secret=${{secrets.client_secret}}" -var="tenant_id=${{secrets.tenant_id}}" -var="subscription_id=${{secrets.subscription_id}}" -out=tfplan
+        run: terraform plan -var="administratorloginpassword=${{secrets.administratorloginpassword}}" -var="client_id=${{secrets.client_id}}" -var="client_secret=${{secrets.client_secret}}" -var="tenant_id=${{secrets.tenant_id}}" -var="subscription_id=${{secrets.subscription_id}}" -out=tfplan
 
       - name: terraform apply
         run: terraform apply -auto-approve "tfplan"
