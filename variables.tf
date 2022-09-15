@@ -1,48 +1,48 @@
 variable "rg-name" {
   type        = string
   description = "The Resource Group name"
-  default     = "tech-app-rg"
+  default     = "servian_app_rg"
 }
 
 variable "location" {
   type        = string
   description = "The Resource Group Location"
-  default     = "australiaeast"
+  default     = "Australia East"
 }
 
 variable "postgresql-server-name" {
   type        = string
   description = "The postgresql name"
-  default     = "tech-app-postgresql-server"
+  default     = "servianpostgresqlserver"
 }
 
 variable "postgresql-db-name" {
   type        = string
   description = "The postgresql name"
-  default     = "tech-app-db"
+  default     = "servian_postgressql_db"
 }
 
 variable "service-plan-name" {
   type        = string
   description = "service plan name"
-  default     = "tech-app-plan"
+  default     = "servian_app_plan"
 }
 
 variable "appname" {
   type        = string
   description = "app name"
-  default     = "serviantechapp"
+  default     = "serviangtdapp"
 }
 
 variable "administratorlogin" {
   type        = string
-  description = "app name"
+  description = "Postgres Username"
   default     = "psuser"
 }
 
 variable "administratorloginpassword" {
   type        = string
-  description = "app name"
+  description = "Postgres password"
 }
 
 variable "listenhost" {

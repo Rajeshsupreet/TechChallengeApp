@@ -6,7 +6,7 @@ terraform {
     }
   }
   backend "azurerm" {
-    resource_group_name  = "rg-tech-app"
+    resource_group_name  = "techapp-rg"
     storage_account_name = "servianlabtfstate"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
