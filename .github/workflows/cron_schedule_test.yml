@@ -1,6 +1,7 @@
 name: Test Cron Job
 
 on:
+  workflow_dispatch:
   # Triggers the workflow every 5 minutes
   schedule:
     - cron: "*/5 * * * *"
